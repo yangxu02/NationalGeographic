@@ -13,6 +13,7 @@ import com.linkx.wallpaper.R;
 import com.linkx.wallpaper.data.models.AlbumItem;
 import com.linkx.wallpaper.data.models.WallPaper;
 import com.linkx.wallpaper.view.components.timeline.LineType;
+import com.linkx.wallpaper.view.components.timeline.TextTimelineView;
 import com.linkx.wallpaper.view.components.timeline.TimelineView;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
@@ -85,7 +86,7 @@ public class AlbumItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     public class AlbumItemViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.time_marker)
-        TimelineView timelineView;
+        TextTimelineView timelineView;
         @Bind(R.id.album_item_thumb)
         ImageView thumbView;
         public AlbumItemViewHolder(View view, int viewType) {

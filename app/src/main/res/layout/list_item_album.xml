@@ -1,34 +1,35 @@
-<android.support.v7.widget.CardView
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/card_view"
     android:layout_width="match_parent"
-    android:layout_height="96dp"
-    android:layout_margin="@dimen/spacing_medium"
-    android:background="@drawable/clickable"
-    android:padding="@dimen/spacing_medium">
+    android:layout_height="180dp"
+    >
 
-  <RelativeLayout
+  <com.linkx.wallpaper.view.components.timeline.TextTimelineView
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      android:id="@+id/time_marker"
+      android:layout_width="wrap_content"
+      android:layout_height="match_parent"
+      android:layout_marginEnd="@dimen/spacing_large"
+      android:layout_marginRight="@dimen/spacing_large"
+      app:text="2016.11.02"
+      app:marker_size="12dp"
+      app:markerInCenter="true"
+      app:line_orientation="vertical"
+      app:line_size="2dp"
+      app:line="@color/green_teal"
+      />
+  <android.support.v7.widget.CardView
+      android:id="@+id/card_view"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content">
-
-    <com.linkx.wallpaper.view.components.timeline.TimelineView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/time_marker"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        app:marker_size="25dp"
-        app:markerInCenter="true"
-        app:line_orientation="vertical"
-        app:line_size="2dp"
-        app:line="@color/green_teal"/>
-
+      android:layout_height="wrap_content"
+      android:layout_toEndOf="@+id/time_marker"
+      android:layout_toRightOf="@+id/time_marker"
+      >
     <ImageView
         android:id="@+id/album_item_thumb"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_toEndOf="@+id/time_marker"
-        android:layout_toRightOf="@+id/time_marker"
         android:scaleType="centerCrop"
-    />
-  </RelativeLayout>
-</android.support.v7.widget.CardView>
+        />
+  </android.support.v7.widget.CardView>
+</RelativeLayout>

@@ -5,6 +5,11 @@
   </declare-styleable>
 
   <declare-styleable name="timeline_style" >
+    <attr name="text" format="string"/>
+    <attr name="textColor" format="color|reference"/>
+    <attr name="textBackgroundColor" format="color|reference"/>
+    <attr name="textSize" format="dimension"/>
+    <attr name="bold" format="boolean"/>
     <attr name="marker" format="color|reference"/>
     <attr name="line" format="color|reference"/>
     <attr name="marker_size" format="dimension"/>
