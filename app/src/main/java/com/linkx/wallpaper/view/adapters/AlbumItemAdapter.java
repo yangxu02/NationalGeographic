@@ -1,5 +1,6 @@
 package com.linkx.wallpaper.view.adapters;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
@@ -13,9 +14,11 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.linkx.wallpaper.R;
+import com.linkx.wallpaper.activities.AlbumItemActivity;
 import com.linkx.wallpaper.data.models.AlbumItem;
 import com.linkx.wallpaper.data.models.WallPaper;
 import com.linkx.wallpaper.utils.DisplayUtils;
+import com.linkx.wallpaper.view.Transition;
 import com.linkx.wallpaper.view.components.TextDrawable;
 import com.linkx.wallpaper.view.components.timeline.LineType;
 import com.linkx.wallpaper.view.components.timeline.TextTimelineView;
@@ -184,6 +187,11 @@ public class AlbumItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             this.timeTextView.setImageDrawable(drawable);
             this.title.setText(item.title());
             this.desc.setText(item.description());
+
+            this.thumbView.setOnClickListener(l -> {
+                Activity activity = (Activity) this.itemView.getContext();
+                AlbumItemActivity.launch(activity, item, Transition.PUSH_UP);
+            });
         }
     }
 
@@ -207,6 +215,11 @@ public class AlbumItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 .into(this.thumbView);
             this.title.setText(item.title());
             this.desc.setText(item.description());
+
+            this.thumbView.setOnClickListener(l -> {
+                Activity activity = (Activity) this.itemView.getContext();
+                AlbumItemActivity.launch(activity, item, Transition.PUSH_UP);
+            });
         }
     }
 

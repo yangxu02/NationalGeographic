@@ -1,0 +1,74 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+  <android.support.v7.widget.Toolbar
+      android:id="@+id/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/green_teal"
+      android:minHeight="?attr/actionBarSize"
+  >
+    <TextView
+        android:id="@+id/toolbar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+        android:layout_gravity="center"
+    />
+  </android.support.v7.widget.Toolbar>
+
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_below="@+id/toolbar"
+  >
+    <TextView
+        android:id="@+id/album_item_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_xsmall"
+        android:layout_marginLeft="@dimen/spacing_xsmall"
+        android:textColor="@color/white"
+        android:layout_alignParentBottom="true"
+    />
+    <TextView
+        android:id="@+id/album_item_title"
+        android:layout_above="@+id/album_item_desc"
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:layout_marginStart="@dimen/spacing_xsmall"
+        android:layout_marginLeft="@dimen/spacing_xsmall"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:maxLines="1"
+        android:ellipsize="end"
+    />
+
+    <ImageView
+        android:id="@+id/album_item_clip"
+        android:layout_above="@+id/album_item_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:layout_gravity="center_vertical"
+    />
+
+  </RelativeLayout>
+</LinearLayout>
+
+    <!--<android.support.design.widget.NavigationView-->
+    <!--android:id="@+id/navigation_view"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_gravity="start"-->
+    <!--android:background="@android:color/white"-->
+    <!--app:menu="@menu/menu_drawer" />-->
+
+

@@ -1,26 +1,17 @@
 package com.linkx.wallpaper.activities;
 
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import com.etsy.android.grid.StaggeredGridView;
-import com.google.common.collect.Lists;
 import com.linkx.wallpaper.R;
-import com.linkx.wallpaper.data.models.WallPaper;
 import com.linkx.wallpaper.data.services.NGImageService;
-import com.linkx.wallpaper.data.services.WallPaperListQueryService;
 import com.linkx.wallpaper.view.adapters.AlbumItemAdapter;
 import com.linkx.wallpaper.view.adapters.WallPaperListAdapter;
 import com.linkx.wallpaper.view.listeners.EndlessRecyclerOnScrollListener;
-import java.util.ArrayList;
-import java.util.List;
-import rx.Subscriber;
 
 public class MainActivity extends BaseActivity {
 
@@ -48,7 +39,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         setupActionBar();
         setupViews();
