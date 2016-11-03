@@ -43,10 +43,24 @@
 
   <style name="Widget.GameCard" parent="android:Widget">
     <item name="android:layout_marginStart">16dp</item>
+    <item name="android:layout_marginLeft">16dp</item>
     <item name="android:layout_marginEnd">16dp</item>
+    <item name="android:layout_marginRight">16dp</item>
     <item name="android:layout_marginTop">4dp</item>
     <item name="android:layout_marginBottom">24dp</item>
+    <item name="android:orientation">vertical</item>
   </style>
+
+  <style name="Widget.AlbumCard" parent="android:Widget">
+    <item name="android:layout_marginStart">4dp</item>
+    <item name="android:layout_marginLeft">4dp</item>
+    <item name="android:layout_marginEnd">4dp</item>
+    <item name="android:layout_marginRight">4dp</item>
+    <item name="android:layout_marginTop">4dp</item>
+    <item name="android:layout_marginBottom">16dp</item>
+    <item name="android:orientation">vertical</item>
+  </style>
+
 
   <style name="Widget.AttrContent" parent="android:Widget">
     <item name="android:paddingLeft">2dp</item>

@@ -1,0 +1,42 @@
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="180dp"
+>
+  <ImageView
+      android:id="@+id/album_item_thumb"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:scaleType="centerCrop"
+  />
+
+  <LinearLayout
+      android:layout_gravity="bottom"
+      android:paddingBottom="30dp"
+      android:background="#33000000"
+      android:orientation="vertical"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/album_item_title"
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:layout_marginStart="@dimen/spacing_xsmall"
+        android:layout_marginLeft="@dimen/spacing_xsmall"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:maxLines="1"
+        android:ellipsize="end"
+    />
+    <TextView
+        android:id="@+id/album_item_desc"
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:layout_marginStart="@dimen/spacing_xsmall"
+        android:layout_marginLeft="@dimen/spacing_xsmall"
+        android:textColor="@color/white"
+        android:maxLines="1"
+        android:ellipsize="end"
+    />
+  </LinearLayout>
+</FrameLayout>

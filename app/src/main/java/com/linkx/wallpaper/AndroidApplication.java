@@ -6,6 +6,8 @@ import com.linkx.wallpaper.di.components.ApplicationComponent;
 import com.linkx.wallpaper.di.components.DaggerApplicationComponent;
 import com.linkx.wallpaper.di.modules.ApplicationModule;
 import com.squareup.leakcanary.LeakCanary;
+import com.squareup.picasso.OkHttpDownloader;
+import com.squareup.picasso.Picasso;
 
 public class AndroidApplication extends Application {
 
@@ -17,12 +19,24 @@ public class AndroidApplication extends Application {
         LeakCanary.install(this);
         initializeInjector();
         initializeStetho();
+        initializePicasso();
     }
 
     public void initializeInjector() {
         this.applicationComponent = DaggerApplicationComponent.builder()
             .applicationModule(new ApplicationModule(this))
             .build();
+    }
+
+    private void initializePicasso() {
+        int maxCacheSize = 250 * 1024 * 1024;
+
+        Picasso picasso =  new Picasso.Builder(this)
+            .downloader(new OkHttpDownloader(getCacheDir(), maxCacheSize))
+            .loggingEnabled(true)
+            .build();
+        picasso.setIndicatorsEnabled(true);
+        Picasso.setSingletonInstance(picasso);
     }
 
     private void initializeStetho() {

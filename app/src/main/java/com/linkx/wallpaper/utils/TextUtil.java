@@ -1,6 +1,7 @@
 package com.linkx.wallpaper.utils;
 
 import android.text.format.DateFormat;
+import com.google.common.base.Strings;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -50,6 +51,16 @@ public class TextUtil {
 
         }
         return defVal;
+    }
+
+    public static String strip(String input, String substr) {
+        if (Strings.isNullOrEmpty(input) || Strings.isNullOrEmpty(substr)) {
+            return input;
+        }
+        if (input.startsWith(substr)) {
+            return input.substring(substr.length());
+        }
+        return input;
     }
 
 }

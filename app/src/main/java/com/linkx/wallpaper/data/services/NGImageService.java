@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.Log;
 import com.google.common.base.Charsets;
 import com.google.common.base.Strings;
+import com.google.common.collect.Collections2;
+import com.google.common.collect.Lists;
 import com.google.common.io.Files;
 import com.linkx.wallpaper.data.models.AlbumItem;
 import com.linkx.wallpaper.data.models.Model;
@@ -24,11 +26,15 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.exceptions.OnErrorThrowable;
+import rx.functions.Action1;
+import rx.functions.Func0;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 public class NGImageService implements ICachedDataService {
 
     public final static String ENDPOINT = "http://www.nationalgeographic.com.cn";
+    public final static int PAGESIZE = 15;
     public interface NGImageApi {
         @GET("/index.php?m=content&c=index&a=loadmorebya&catid=39&modelid=3&parentid=11")
         Observable<List<AlbumItem>> getAlbumItemList(@Query("num") String pageNumber);
@@ -45,14 +51,32 @@ public class NGImageService implements ICachedDataService {
         return IOUtil.cachedDataFileName("./wallpaper/data", tag);
     }
 
-    public static void getAlbumItemList(final AlbumItemAdapter adapter, String pageNumber) {
+    public static void getAlbumItemList(final AlbumItemAdapter adapter,
+                                        String pageNumber) {
+        getAlbumItemList(adapter, pageNumber, PAGESIZE);
+    }
+
+    public static void getAlbumItemList(final AlbumItemAdapter adapter,
+                                        String pageNumber,
+                                        int limit) {
         NGImageApi ngImageApi =
             ServiceFactory.createServiceFrom(NGImageApi.class, ENDPOINT);
 
-        Observable.from(new String[] {pageNumber}).flatMap(ngImageApi::getAlbumItemList)
+        Observable.just(pageNumber).flatMap(ngImageApi::getAlbumItemList)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(adapter::addAll);
+            .subscribe(new Action1<List<AlbumItem>>() {
+                @Override
+                public void call(List<AlbumItem> items) {
+                    if (limit >= items.size()) {
+                        adapter.addAll(items);
+                    } else {
+                        for (int i = 0; i < limit; ++i) {
+                            adapter.add(items.get(i));
+                        }
+                    }
+                }
+            });
     }
 
 

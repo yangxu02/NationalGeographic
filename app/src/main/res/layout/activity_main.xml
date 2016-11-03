@@ -33,7 +33,6 @@
           android:id="@+id/toolbar_title"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="大家都在玩"
           android:textColor="@android:color/white"
           android:textSize="16sp"
           style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
@@ -50,9 +49,17 @@
         app:column_count="2"
         app:item_margin="8dp"/>
 
+     <android.support.v7.widget.RecyclerView
+        android:id="@+id/history_album_container"
+        android:layout_below="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+         android:layout_marginBottom="@dimen/spacing_medium"
+      />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/album_container"
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/history_album_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
       />

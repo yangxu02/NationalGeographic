@@ -24,27 +24,31 @@ import rx.Subscriber;
 
 public class MainActivity extends BaseActivity {
 
-    @Bind(R.id.drawer_layout)
-    DrawerLayout drawerLayout;
+//    @Bind(R.id.drawer_layout)
+//    DrawerLayout drawerLayout;
 //    @Bind(R.id.navigation_view)
 //    NavigationView navigationView;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.toolbar_title)
-    TextView toolbarTitle;
-    @Bind(R.id.wallpaper_list)
-    StaggeredGridView wallPaperListView;
+//    @Bind(R.id.toolbar_title)
+//    TextView toolbarTitle;
+
+    @Bind(R.id.history_album_container)
+    RecyclerView historyAlbumContainer;
+
     @Bind(R.id.album_container)
     RecyclerView albumContainer;
 
+
     private WallPaperListAdapter wallPaperListAdapter;
 
+    private AlbumItemAdapter historyAlbumItemAdapter;
     private AlbumItemAdapter albumItemAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main2);
         ButterKnife.bind(this);
         setupActionBar();
         setupViews();
@@ -56,13 +60,9 @@ public class MainActivity extends BaseActivity {
     }
 
     private void setupActionBar() {
-//        toolbarTitle.setText("大家都在玩");
-        toolbarTitle.setText("");
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-
+//        getSupportActionBar().setLogo(this.getApplicationInfo().icon);
+//        getSupportActionBar().setTitle(this.getApplicationInfo().name);
         /*
         ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(
                 this,
@@ -79,23 +79,29 @@ public class MainActivity extends BaseActivity {
 
     private void setupViews() {
 
+        historyAlbumItemAdapter = new AlbumItemAdapter(AlbumItemAdapter.AdapterType.ALBUM_HISTORY);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        historyAlbumContainer.setLayoutManager(linearLayoutManager);
+        historyAlbumContainer.setAdapter(historyAlbumItemAdapter);
+        historyAlbumItemAdapter.addLoadingView();
+        int pageNumber = 60 / 15;
+        NGImageService.getAlbumItemList(historyAlbumItemAdapter, "" + pageNumber, 3);
+
         albumItemAdapter = new AlbumItemAdapter();
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         albumContainer.setLayoutManager(linearLayoutManager);
         albumContainer.addOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int currentPage) {
                 Log.w("WP", "Load page:" + currentPage);
-                albumItemAdapter.add(null);
-
-                albumItemAdapter.removeLast();
-
+//                albumItemAdapter.addLoadingView();
                 int nextPageNumber = currentPage - 1;
                 NGImageService.getAlbumItemList(albumItemAdapter, "" + nextPageNumber);
             }
         });
 
         albumContainer.setAdapter(albumItemAdapter);
+        albumItemAdapter.addLoadingView();
         NGImageService.getAlbumItemList(albumItemAdapter, "0");
 
         /*
