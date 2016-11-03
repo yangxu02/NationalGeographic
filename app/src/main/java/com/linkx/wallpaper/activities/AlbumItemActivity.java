@@ -31,8 +31,6 @@ public class AlbumItemActivity extends BaseActivity {
 //    NavigationView navigationView;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.toolbar_title)
-    TextView toolbarTitle;
     @Bind(R.id.album_item_clip)
     ImageView albumItemClip;
     @Bind(R.id.album_item_title)
@@ -67,13 +65,6 @@ public class AlbumItemActivity extends BaseActivity {
     }
 
     private void setupActionBar() {
-//        toolbarTitle.setText("大家都在玩");
-        toolbarTitle.setText("");
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-
         toolbar.inflateMenu(R.menu.menu_toolbar_album_item);
 
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
