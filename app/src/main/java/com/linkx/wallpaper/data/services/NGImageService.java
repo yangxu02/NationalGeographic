@@ -2,14 +2,17 @@ package com.linkx.wallpaper.data.services;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.ImageView;
 import com.google.common.base.Charsets;
 import com.google.common.base.Strings;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 import com.google.common.io.Files;
+import com.linkx.wallpaper.R;
 import com.linkx.wallpaper.data.models.AlbumItem;
 import com.linkx.wallpaper.data.models.Model;
 import com.linkx.wallpaper.data.models.WallPaper;
+import com.linkx.wallpaper.data.parser.NGImageLinkParser;
 import com.linkx.wallpaper.utils.AssetsUtil;
 import com.linkx.wallpaper.utils.IOUtil;
 import com.linkx.wallpaper.utils.QueryContextUtils;
@@ -20,7 +23,14 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import com.squareup.picasso.Picasso;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
 import rx.Subscriber;
@@ -40,6 +50,11 @@ public class NGImageService implements ICachedDataService {
         Observable<List<AlbumItem>> getAlbumItemList(@Query("num") String pageNumber);
     }
 
+    public interface NGImageClipApi {
+        @GET("/{item_link}")
+        Observable<ResponseBody> getAlbumItemClipLink(@Path("item_link") String itemLink);
+    }
+
     private Context appCtx;
 
     public NGImageService(Context appCtx) {
@@ -49,6 +64,46 @@ public class NGImageService implements ICachedDataService {
     @Override
     public String getCachedDataFileName(String tag) {
         return IOUtil.cachedDataFileName("./wallpaper/data", tag);
+    }
+
+    public static void getAlbumItemClip(final AlbumItem albumItem, final ImageView clipView) {
+        NGImageClipApi ngImageClipApi = ServiceFactory.createServiceFrom(NGImageClipApi.class, ENDPOINT, null);
+        Observable.just(albumItem.itemLink()).flatMap(ngImageClipApi::getAlbumItemClipLink)
+                .flatMap(new Func1<ResponseBody, Observable<String>>() {
+                    @Override
+                    public Observable<String> call(ResponseBody responseBody) {
+                        String clipLink = "";
+                        try {
+                            clipLink = NGImageLinkParser.getLinkFromHtml(responseBody.string());
+                            Log.d("WP", "clip=" + clipLink + ",thumb=" + albumItem.thumb());
+                        } catch (Exception e) {
+                            Log.w("WP", e);
+                        }
+                        if (Strings.isNullOrEmpty(clipLink)) {
+                            throw OnErrorThrowable.from(new Exception("empty clipLink"));
+                        }
+                        return Observable.just(clipLink);
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<String>() {
+                    @Override
+                    public void onCompleted() {
+                        Log.w("WP", "onCompleted");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.w("WP", e);
+                        clipView.setImageResource(R.mipmap.ic_gallery_empty2);
+                    }
+
+                    @Override
+                    public void onNext(String clipLink) {
+                        Picasso.with(clipView.getContext()).load(clipLink).error(R.mipmap.ic_gallery_empty2).into(clipView);
+                    }
+                });
     }
 
     public static void getAlbumItemList(final AlbumItemAdapter adapter,
@@ -65,9 +120,20 @@ public class NGImageService implements ICachedDataService {
         Observable.just(pageNumber).flatMap(ngImageApi::getAlbumItemList)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Action1<List<AlbumItem>>() {
+            .subscribe(new Subscriber<List<AlbumItem>>() {
                 @Override
-                public void call(List<AlbumItem> items) {
+                public void onCompleted() {
+                    Log.w("WP", "onCompleted");
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    Log.w("WP", e);
+                    adapter.removeLast();
+                }
+
+                @Override
+                public void onNext(List<AlbumItem> items) {
                     if (limit >= items.size()) {
                         adapter.addAll(items);
                     } else {

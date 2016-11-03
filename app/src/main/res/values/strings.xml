@@ -31,4 +31,6 @@
   <string name="quantity_few">少量</string>
   <string name="quantity_lot">大量</string>
   <string name="quantity_appropriate">适中</string>
+  <string name="ic_menu_share">Share With</string>
+  <string name="ic_menu_set_as">Set Picture As</string>
 </resources>

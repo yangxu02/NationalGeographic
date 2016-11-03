@@ -19,6 +19,7 @@ import com.linkx.wallpaper.R;
 import com.linkx.wallpaper.data.models.AlbumItem;
 import com.linkx.wallpaper.data.models.Model;
 import com.linkx.wallpaper.data.models.WallPaper;
+import com.linkx.wallpaper.data.services.NGImageService;
 import com.linkx.wallpaper.view.Transition;
 import com.linkx.wallpaper.view.adapters.WallPaperClipsAdapter;
 import com.squareup.picasso.Picasso;
@@ -95,10 +96,8 @@ public class AlbumItemActivity extends BaseActivity {
     }
 
     private void setupViews() {
-           Picasso.with(this)
-                .load(albumItem.thumb())
-                .into(this.albumItemClip);
-            this.albumItemTitle.setText(albumItem.title());
-            this.albumItemDesc.setText(albumItem.description());
+        NGImageService.getAlbumItemClip(albumItem, this.albumItemClip);
+        this.albumItemTitle.setText(albumItem.title());
+        this.albumItemDesc.setText(albumItem.description());
     }
 }

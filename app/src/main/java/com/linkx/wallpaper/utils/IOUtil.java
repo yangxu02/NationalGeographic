@@ -21,8 +21,9 @@ import org.apache.commons.lang3.StringEscapeUtils;
  */
 public class IOUtil {
     private final static String DAY_FORMAT = "yyyyMMdd";
-    private final static String DATA_DIR = ".wallpaper/data";
-    private final static String TMP_DIR = ".wallpaper/tmp";
+    private final static String DATA_DIR = ".nga/data";
+    private final static String CACHE_DIR = ".nga/cache";
+    private final static String TMP_DIR = ".nga/tmp";
 
     public static String dataFileDir() {
         File dir = Environment.getExternalStorageDirectory();
@@ -63,6 +64,21 @@ public class IOUtil {
         return Joiner.on('/').join(dir.getAbsolutePath(), TMP_DIR, tag);
     }
 
+    public static File cacheDir0() throws IOException {
+        File dir = Environment.getExternalStorageDirectory();
+        String path =  Joiner.on('/').join(dir.getAbsolutePath(), CACHE_DIR, "_");
+        File file = new File(path);
+        if (!file.exists()) {
+            Files.createParentDirs(file);
+        }
+        return file.getParentFile();
+    }
+
+    public static File cacheDir() {
+        File dir = Environment.getExternalStorageDirectory();
+        String path =  Joiner.on('/').join(dir.getAbsolutePath(), CACHE_DIR, "_");
+        return new File(path);
+    }
 
     public static String dayStr(long mills) {
         return DateFormat.format(DAY_FORMAT, mills).toString();
@@ -112,8 +128,8 @@ public class IOUtil {
         if (Strings.isNullOrEmpty(url)) return "";
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-            .url(url)
-            .build();
+                .url(url)
+                .build();
         int i = 0;
         while (i < retries) {
             Response response = null;

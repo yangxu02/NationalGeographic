@@ -11,46 +11,53 @@
       android:layout_height="wrap_content"
       android:background="@color/green_teal"
       android:minHeight="?attr/actionBarSize"
-  >
+      >
   </android.support.v7.widget.Toolbar>
 
 
-  <RelativeLayout
+  <FrameLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-  >
+      >
     <ImageView
         android:id="@+id/album_item_clip"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerInside"
-        android:layout_centerInParent="true"
-    />
-    <TextView
-        android:id="@+id/album_item_desc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_xsmall"
-        android:layout_marginLeft="@dimen/spacing_xsmall"
-        android:layout_marginBottom="@dimen/spacing_large"
-        android:textColor="@color/black"
-        android:layout_alignParentBottom="true"
-    />
-    <TextView
-        android:id="@+id/album_item_title"
-        android:layout_above="@+id/album_item_desc"
-        android:layout_width="match_parent"
-        android:layout_height="16dp"
-        android:layout_marginStart="@dimen/spacing_xsmall"
-        android:layout_marginLeft="@dimen/spacing_xsmall"
-        android:layout_marginBottom="@dimen/spacing_small"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:maxLines="1"
-        android:ellipsize="end"
-    />
+        />
 
-  </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom|center_vertical"
+        >
+
+      <TextView
+          android:id="@+id/album_item_title"
+          android:layout_width="match_parent"
+          android:layout_height="16dp"
+          android:layout_marginStart="@dimen/spacing_xsmall"
+          android:layout_marginLeft="@dimen/spacing_xsmall"
+          android:layout_marginBottom="@dimen/spacing_small"
+          android:layout_centerHorizontal="true"
+          android:textStyle="bold"
+          android:textColor="@color/black"
+          android:maxLines="1"
+          android:ellipsize="end"
+          />
+
+      <TextView
+          android:id="@+id/album_item_desc"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_below="@id/album_item_title"
+          android:layout_marginStart="@dimen/spacing_xsmall"
+          android:layout_marginLeft="@dimen/spacing_xsmall"
+          android:layout_marginBottom="@dimen/spacing_large"
+          android:textColor="@color/black"
+          />
+    </RelativeLayout>
+
+  </FrameLayout>
 </LinearLayout>
 
     <!--<android.support.design.widget.NavigationView-->

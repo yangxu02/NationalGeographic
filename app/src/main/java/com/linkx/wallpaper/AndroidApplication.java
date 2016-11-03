@@ -1,10 +1,12 @@
 package com.linkx.wallpaper;
 
 import android.app.Application;
+import android.os.Environment;
 import com.facebook.stetho.Stetho;
 import com.linkx.wallpaper.di.components.ApplicationComponent;
 import com.linkx.wallpaper.di.components.DaggerApplicationComponent;
 import com.linkx.wallpaper.di.modules.ApplicationModule;
+import com.linkx.wallpaper.utils.IOUtil;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.picasso.OkHttpDownloader;
 import com.squareup.picasso.Picasso;
@@ -32,7 +34,7 @@ public class AndroidApplication extends Application {
         int maxCacheSize = 250 * 1024 * 1024;
 
         Picasso picasso =  new Picasso.Builder(this)
-            .downloader(new OkHttpDownloader(getCacheDir(), maxCacheSize))
+            .downloader(new OkHttpDownloader(IOUtil.cacheDir(), maxCacheSize))
             .loggingEnabled(true)
             .build();
         picasso.setIndicatorsEnabled(true);
