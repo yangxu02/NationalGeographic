@@ -27,11 +27,11 @@ package org.htmlparser.visitors;
 
 import org.htmlparser.Node;
 import org.htmlparser.Remark;
+import org.htmlparser.Tag;
 import org.htmlparser.Text;
 import org.htmlparser.tags.CompositeTag;
 import org.htmlparser.tags.ImageTag;
 import org.htmlparser.tags.LinkTag;
-import org.htmlparser.Tag;
 
 public class UrlModifyingVisitor extends NodeVisitor {
     private String linkPrefix;

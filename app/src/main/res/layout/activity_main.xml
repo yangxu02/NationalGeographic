@@ -19,6 +19,7 @@
           android:id="@+id/history_album_container"
           android:layout_width="match_parent"
           android:layout_height="180dp"
+          android:background="@color/dark_gray"
           app:layout_collapseMode="parallax"
           app:layout_collapseParallaxMultiplier="0.7"
       />

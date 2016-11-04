@@ -27,7 +27,6 @@ package org.htmlparser.tags;
 
 import java.util.Locale;
 import java.util.Vector;
-
 import org.htmlparser.Attribute;
 import org.htmlparser.nodes.TagNode;
 import org.htmlparser.util.ParserUtils;

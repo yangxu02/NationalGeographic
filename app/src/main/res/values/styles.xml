@@ -33,24 +33,6 @@
     <item name="android:windowTranslucentStatus" tools:targetApi="21">true</item>
   </style>
 
-  <style name="Widget.CardContent" parent="android:Widget">
-    <item name="android:paddingLeft">16dp</item>
-    <item name="android:paddingRight">16dp</item>
-    <item name="android:paddingTop">4dp</item>
-    <item name="android:paddingBottom">24dp</item>
-    <item name="android:orientation">vertical</item>
-  </style>
-
-  <style name="Widget.GameCard" parent="android:Widget">
-    <item name="android:layout_marginStart">16dp</item>
-    <item name="android:layout_marginLeft">16dp</item>
-    <item name="android:layout_marginEnd">16dp</item>
-    <item name="android:layout_marginRight">16dp</item>
-    <item name="android:layout_marginTop">4dp</item>
-    <item name="android:layout_marginBottom">24dp</item>
-    <item name="android:orientation">vertical</item>
-  </style>
-
   <style name="Widget.AlbumCard" parent="android:Widget">
     <item name="android:layout_marginStart">4dp</item>
     <item name="android:layout_marginLeft">4dp</item>
@@ -61,7 +43,6 @@
     <item name="android:orientation">vertical</item>
   </style>
 
-
   <style name="Widget.AttrContent" parent="android:Widget">
     <item name="android:paddingLeft">2dp</item>
     <item name="android:paddingRight">2dp</item>
@@ -70,62 +51,10 @@
     <item name="android:orientation">vertical</item>
   </style>
 
-
   <style name="Divider">
     <item name="android:layout_width">match_parent</item>
     <item name="android:layout_height">1dp</item>
     <item name="android:background">?android:attr/listDivider</item>
   </style>
 
-  <style name="ColText">
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:layout_marginBottom">@dimen/spacing_xsmall</item>
-    <item name="android:layout_marginStart">@dimen/spacing_small</item>
-    <item name="android:layout_marginEnd">@dimen/spacing_xsmall</item>
-    <item name="android:layout_gravity">center_vertical</item>
-    <item name="android:textSize">@dimen/text_size_xsmall</item>
-    <item name="android:fontFamily">monospace</item>
-    <item name="android:typeface">monospace</item>
-  </style>
-  <style name="ColText.time" parent="ColText">
-    <item name="android:layout_width">@dimen/time_col_width</item>
-    <item name="android:text">@string/time_unknown</item>
-  </style>
-  <style name="ColText.value" parent="ColText">
-    <item name="android:layout_width">@dimen/time_col_width</item>
-    <item name="android:text">@string/value_unknown</item>
-    <item name="android:layout_gravity">center_horizontal</item>
-  </style>
-  <style name="ColText.time.first" parent="ColText.time">
-    <item name="android:layout_marginStart">@dimen/spacing_xsmall</item>
-  </style>
-  <style name="ColText.timer" parent="ColText">
-    <item name="android:layout_width">@dimen/timer_col_width</item>
-    <item name="android:text">@string/timer_init</item>
-  </style>
-  <style name="ColText.tag" parent="ColText">
-    <item name="android:layout_width">@dimen/tag_col_width</item>
-    <item name="android:layout_marginStart">@dimen/spacing_xsmall</item>
-  </style>
-  <style name="ColText.iconMedium" parent="ColText">
-    <item name="android:layout_width">@dimen/icon_col_medium_size</item>
-    <item name="android:layout_height">@dimen/icon_col_medium_size</item>
-    <item name="android:scaleType">centerInside</item>
-  </style>
-  <style name="ColText.iconSmall" parent="ColText">
-    <item name="android:layout_width">@dimen/icon_col_small_size</item>
-    <item name="android:layout_height">@dimen/icon_col_small_size</item>
-    <item name="android:scaleType">centerInside</item>
-  </style>
-  <style name="ColText.iconMedium.last" parent="ColText.iconMedium">
-    <item name="android:layout_marginStart">@dimen/spacing_xsmall</item>
-  </style>
-  <style name="ColText.iconSmall.last" parent="ColText.iconSmall">
-    <item name="android:layout_marginStart">@dimen/spacing_xsmall</item>
-  </style>
-  <style name="ColText.colorBlock" parent="ColText">
-    <item name="android:layout_marginStart">@dimen/spacing_xsmall</item>
-    <item name="android:layout_width">@dimen/color_col_width</item>
-    <item name="android:layout_height">@dimen/color_col_height</item>
-  </style>
 </resources>

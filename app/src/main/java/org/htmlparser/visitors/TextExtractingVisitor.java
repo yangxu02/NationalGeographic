@@ -25,8 +25,8 @@
 
 package org.htmlparser.visitors;
 
-import org.htmlparser.Text;
 import org.htmlparser.Tag;
+import org.htmlparser.Text;
 import org.htmlparser.util.Translate;
 
 

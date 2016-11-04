@@ -26,7 +26,6 @@
 package org.htmlparser.util;
 
 import java.io.Serializable;
-
 import org.htmlparser.util.sort.Ordered;
 
 /**

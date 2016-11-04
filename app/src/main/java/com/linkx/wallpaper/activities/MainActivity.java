@@ -10,7 +10,6 @@ import butterknife.ButterKnife;
 import com.linkx.wallpaper.R;
 import com.linkx.wallpaper.data.services.NGImageService;
 import com.linkx.wallpaper.view.adapters.AlbumItemAdapter;
-import com.linkx.wallpaper.view.adapters.WallPaperListAdapter;
 import com.linkx.wallpaper.view.listeners.EndlessRecyclerOnScrollListener;
 
 public class MainActivity extends BaseActivity {
@@ -29,9 +28,6 @@ public class MainActivity extends BaseActivity {
 
     @Bind(R.id.album_container)
     RecyclerView albumContainer;
-
-
-    private WallPaperListAdapter wallPaperListAdapter;
 
     private AlbumItemAdapter historyAlbumItemAdapter;
     private AlbumItemAdapter albumItemAdapter;

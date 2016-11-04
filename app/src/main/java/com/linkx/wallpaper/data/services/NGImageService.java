@@ -1,34 +1,28 @@
 package com.linkx.wallpaper.data.services;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
-import android.widget.ImageView;
 import com.google.common.base.Charsets;
 import com.google.common.base.Strings;
-import com.google.common.collect.Collections2;
-import com.google.common.collect.Lists;
 import com.google.common.io.Files;
-import com.linkx.wallpaper.R;
 import com.linkx.wallpaper.data.models.AlbumItem;
+import com.linkx.wallpaper.data.models.IImage;
+import com.linkx.wallpaper.data.models.Image;
+import com.linkx.wallpaper.data.models.ImageType;
 import com.linkx.wallpaper.data.models.Model;
-import com.linkx.wallpaper.data.models.WallPaper;
 import com.linkx.wallpaper.data.parser.NGImageLinkParser;
 import com.linkx.wallpaper.utils.AssetsUtil;
 import com.linkx.wallpaper.utils.IOUtil;
 import com.linkx.wallpaper.utils.QueryContextUtils;
 import com.linkx.wallpaper.view.adapters.AlbumItemAdapter;
-import com.linkx.wallpaper.view.adapters.WallPaperListAdapter;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
-import com.squareup.picasso.Picasso;
 import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -37,8 +31,6 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.exceptions.OnErrorThrowable;
 import rx.functions.Action1;
-import rx.functions.Func0;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 public class NGImageService implements ICachedDataService {
@@ -55,6 +47,36 @@ public class NGImageService implements ICachedDataService {
         Observable<ResponseBody> getAlbumItemClipLink(@Path("item_link") String itemLink);
     }
 
+    public interface NGImageCacheApi {
+        void save(Image image);
+
+        Observable<IImage> get(AlbumItem albumItem);
+    }
+
+    public static class NGImageCache implements NGImageCacheApi {
+        @Override
+        public void save(Image image) {
+            String fileName = IOUtil.dataFilePath("clip_" + image.identity());
+            try {
+                IOUtil.writeLine(fileName, image.toJson());
+            } catch (IOException e) {
+                Log.w("WP", e);
+            }
+        }
+
+        @Override
+        public Observable<IImage> get(AlbumItem albumItem) {
+             String fileName = IOUtil.dataFilePath("clip_" + albumItem.identity());
+            try {
+                return Observable.just(Model.fromJson(IOUtil.readFirstLine(fileName), Image.class));
+            } catch (IOException e) {
+                Log.w("WP", e);
+            }
+            return Observable.just(null);
+        }
+    }
+
+
     private Context appCtx;
 
     public NGImageService(Context appCtx) {
@@ -66,12 +88,39 @@ public class NGImageService implements ICachedDataService {
         return IOUtil.cachedDataFileName("./wallpaper/data", tag);
     }
 
-    public static void getAlbumItemClip(final AlbumItem albumItem, final ImageView clipView) {
-        NGImageClipApi ngImageClipApi = ServiceFactory.createServiceFrom(NGImageClipApi.class, ENDPOINT, null);
-        Observable.just(albumItem.itemLink()).flatMap(ngImageClipApi::getAlbumItemClipLink)
-                .flatMap(new Func1<ResponseBody, Observable<String>>() {
-                    @Override
-                    public Observable<String> call(ResponseBody responseBody) {
+    public static class ImageInfo {
+        String id;
+        String link;
+        String mimeType;
+        String localPath;
+        Bitmap bitmap;
+
+        public Bitmap getBitmap() {
+            return bitmap;
+        }
+    }
+
+
+    public static Observable<ImageInfo> getAlbumItemClip(final Context context, final AlbumItem albumItem) {
+        return new NGImageCache().get(albumItem).flatMap(iImage -> {
+            if (null != iImage) {
+                Image image = (Image) iImage;
+                ImageInfo imageInfo = new ImageInfo();
+                imageInfo.id = image.source().id();
+                imageInfo.link = image.url();
+
+                imageInfo.localPath = image.localPath();
+                imageInfo.bitmap = BitmapFactory.decodeFile(image.localPath());
+                imageInfo.mimeType = image.mimeType();
+
+                Log.d("WP", "load from disk");
+
+                return Observable.just(imageInfo);
+            } else {
+                Log.d("WP", "load from 2 stage network");
+                NGImageClipApi ngImageClipApi = ServiceFactory.createServiceFrom(NGImageClipApi.class, ENDPOINT, null);
+                return Observable.just(albumItem.itemLink()).flatMap(ngImageClipApi::getAlbumItemClipLink)
+                    .flatMap(responseBody -> {
                         String clipLink = "";
                         try {
                             clipLink = NGImageLinkParser.getLinkFromHtml(responseBody.string());
@@ -82,28 +131,35 @@ public class NGImageService implements ICachedDataService {
                         if (Strings.isNullOrEmpty(clipLink)) {
                             throw OnErrorThrowable.from(new Exception("empty clipLink"));
                         }
-                        return Observable.just(clipLink);
-                    }
-                })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<String>() {
-                    @Override
-                    public void onCompleted() {
-                        Log.w("WP", "onCompleted");
-                    }
+                        ImageInfo imageInfo = new ImageInfo();
+                        imageInfo.id = albumItem.id();
+                        imageInfo.link = clipLink;
+                        return Observable.just(imageInfo);
+                    })
+                    .flatMap(imageInfo -> {
+                        NGImageDownloader.with(context).load(imageInfo.link).get()
+                            .subscribe(imageBitMap -> {
+                                if (null == imageBitMap) {
+                                    throw OnErrorThrowable.from(new Exception("get bitmap of " + imageInfo.link + " failed"));
+                                }
+                                imageInfo.localPath = imageBitMap.first;
+                                imageInfo.bitmap = imageBitMap.second;
+                                imageInfo.mimeType = "image/png";
+                            });
+                        return Observable.just(imageInfo);
+                    })
+                    .flatMap(imageInfo -> {
+                        // save image information to disk
+                        Image image = Image.create(albumItem.id(), ImageType.clip, imageInfo.link,
+                            imageInfo.mimeType, imageInfo.localPath, albumItem);
+                        new NGImageCache().save(image);
+                        return Observable.just(imageInfo);
+                    });
+            }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.w("WP", e);
-                        clipView.setImageResource(R.mipmap.ic_gallery_empty2);
-                    }
-
-                    @Override
-                    public void onNext(String clipLink) {
-                        Picasso.with(clipView.getContext()).load(clipLink).error(R.mipmap.ic_gallery_empty2).into(clipView);
-                    }
-                });
+        })
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread());
     }
 
     public static void getAlbumItemList(final AlbumItemAdapter adapter,
@@ -143,6 +199,14 @@ public class NGImageService implements ICachedDataService {
                     }
                 }
             });
+    }
+
+    public static void getImageObservable(final AlbumItem albumItem, Action1<IImage> onNext) {
+        NGImageCache ngImageCache = new NGImageCache();
+        Observable.just(albumItem).flatMap(ngImageCache::get)
+            .subscribeOn(Schedulers.io())
+            .subscribeOn(AndroidSchedulers.mainThread())
+            .subscribe(onNext);
     }
 
 

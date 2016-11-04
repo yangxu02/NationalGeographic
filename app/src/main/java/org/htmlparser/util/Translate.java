@@ -35,7 +35,6 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
-
 import org.htmlparser.util.sort.Sort;
 
 /**

@@ -26,9 +26,8 @@
 package org.htmlparser.visitors;
 
 import java.util.Locale;
-import org.htmlparser.tags.LinkTag;
-
 import org.htmlparser.Tag;
+import org.htmlparser.tags.LinkTag;
 
 public class LinkFindingVisitor extends NodeVisitor
 {

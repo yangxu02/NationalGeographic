@@ -40,7 +40,6 @@ import java.util.Hashtable;
 import java.util.Properties;
 import java.util.StringTokenizer;
 import java.util.Vector;
-
 import org.htmlparser.util.ParserException;
 
 /**

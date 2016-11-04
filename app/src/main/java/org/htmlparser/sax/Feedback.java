@@ -25,13 +25,12 @@
 
 package org.htmlparser.sax;
 
-import org.xml.sax.ErrorHandler;
-import org.xml.sax.Locator;
-import org.xml.sax.SAXParseException;
-
 import org.htmlparser.util.ParserException;
 import org.htmlparser.util.ParserFeedback;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 /**
  * Mediates between the feedback mechanism of the htmlparser and an error handler.

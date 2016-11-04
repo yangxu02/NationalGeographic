@@ -25,9 +25,7 @@
 
 package org.htmlparser;
 
-import java.util.Hashtable;
 import java.util.Vector;
-
 import org.htmlparser.scanners.Scanner;
 
 /**

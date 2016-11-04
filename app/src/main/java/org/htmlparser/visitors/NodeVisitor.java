@@ -26,8 +26,8 @@
 package org.htmlparser.visitors;
 
 import org.htmlparser.Remark;
-import org.htmlparser.Text;
 import org.htmlparser.Tag;
+import org.htmlparser.Text;
 
 /**
  * The base class for the 'Visitor' pattern.

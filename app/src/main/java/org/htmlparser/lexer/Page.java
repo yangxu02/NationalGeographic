@@ -25,8 +25,8 @@
 
 package org.htmlparser.lexer;
 
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -40,7 +40,6 @@ import java.net.UnknownHostException;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.Inflater;
 import java.util.zip.InflaterInputStream;
-
 import org.htmlparser.http.ConnectionManager;
 import org.htmlparser.util.ParserException;
 

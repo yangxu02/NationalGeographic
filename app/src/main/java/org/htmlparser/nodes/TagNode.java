@@ -25,11 +25,9 @@
 
 package org.htmlparser.nodes;
 
-import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Locale;
 import java.util.Vector;
-
 import org.htmlparser.Attribute;
 import org.htmlparser.Tag;
 import org.htmlparser.lexer.Cursor;

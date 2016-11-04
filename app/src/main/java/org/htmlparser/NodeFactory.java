@@ -26,7 +26,6 @@
 package org.htmlparser;
 
 import java.util.Vector;
-
 import org.htmlparser.lexer.Page;
 import org.htmlparser.util.ParserException;
 

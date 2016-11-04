@@ -1,7 +1,6 @@
 package com.linkx.wallpaper;
 
 import android.app.Application;
-import android.os.Environment;
 import com.facebook.stetho.Stetho;
 import com.linkx.wallpaper.di.components.ApplicationComponent;
 import com.linkx.wallpaper.di.components.DaggerApplicationComponent;
@@ -31,10 +30,10 @@ public class AndroidApplication extends Application {
     }
 
     private void initializePicasso() {
-        int maxCacheSize = 250 * 1024 * 1024;
+        int maxCacheSize = 25 * 1024 * 1024;
 
         Picasso picasso =  new Picasso.Builder(this)
-            .downloader(new OkHttpDownloader(IOUtil.cacheDir(), maxCacheSize))
+            .downloader(new OkHttpDownloader(IOUtil.picassoCacheDir(), maxCacheSize))
             .loggingEnabled(true)
             .build();
         picasso.setIndicatorsEnabled(true);

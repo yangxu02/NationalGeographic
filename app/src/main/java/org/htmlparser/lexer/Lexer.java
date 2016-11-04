@@ -29,16 +29,15 @@ import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URLConnection;
 import java.util.Vector;
-
 import org.htmlparser.Node;
 import org.htmlparser.NodeFactory;
 import org.htmlparser.Remark;
-import org.htmlparser.Text;
 import org.htmlparser.Tag;
+import org.htmlparser.Text;
 import org.htmlparser.http.ConnectionManager;
 import org.htmlparser.nodes.RemarkNode;
-import org.htmlparser.nodes.TextNode;
 import org.htmlparser.nodes.TagNode;
+import org.htmlparser.nodes.TextNode;
 import org.htmlparser.util.ParserException;
 
 /**

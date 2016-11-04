@@ -1,64 +1,84 @@
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    android:id="@+id/root_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+>
+
+  <uk.co.senab.photoview.PhotoView
+      android:id="@+id/album_item_clip"
+      android:background="#33000000"
+      android:focusableInTouchMode="true"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+  />
+
+  <ProgressBar
+      android:id="@+id/progress_bar"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+  />
+
 
   <android.support.v7.widget.Toolbar
       android:id="@+id/toolbar"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="?attr/actionBarSize"
       android:background="@color/green_teal"
       android:minHeight="?attr/actionBarSize"
-      >
+      android:layout_gravity="top"
+  >
   </android.support.v7.widget.Toolbar>
 
 
-  <FrameLayout
+  <RelativeLayout
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      >
-    <ImageView
-        android:id="@+id/album_item_clip"
+      android:layout_height="96dp"
+      android:layout_gravity="bottom"
+  >
+
+    <TextView
+        android:id="@+id/album_item_title"
+        android:layout_width="wrap_content"
+        android:layout_height="16dp"
+        android:layout_marginStart="@dimen/spacing_xsmall"
+        android:layout_marginLeft="@dimen/spacing_xsmall"
+        android:layout_marginBottom="@dimen/spacing_small"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:maxLines="1"
+        android:ellipsize="end"
+    />
+
+    <TextView
+        android:id="@+id/album_item_time"
+        android:layout_width="wrap_content"
+        android:layout_height="16dp"
+        android:layout_marginStart="@dimen/spacing_medium"
+        android:layout_marginLeft="@dimen/spacing_medium"
+        android:layout_marginBottom="@dimen/spacing_small"
+        android:layout_toEndOf="@+id/album_item_title"
+        android:layout_toRightOf="@+id/album_item_title"
+        android:textColor="@color/dark_gray"
+        android:maxLines="1"
+        android:ellipsize="end"
+    />
+
+    <TextView
+        android:id="@+id/album_item_desc"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="wrap_content"
+        android:layout_below="@id/album_item_title"
+        android:layout_marginStart="@dimen/spacing_xsmall"
+        android:layout_marginLeft="@dimen/spacing_xsmall"
+        android:layout_marginBottom="@dimen/spacing_small"
+        android:layout_alignParentBottom="true"
+        android:textColor="@color/black"
+    />
+  </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="bottom|center_vertical"
-        >
-
-      <TextView
-          android:id="@+id/album_item_title"
-          android:layout_width="match_parent"
-          android:layout_height="16dp"
-          android:layout_marginStart="@dimen/spacing_xsmall"
-          android:layout_marginLeft="@dimen/spacing_xsmall"
-          android:layout_marginBottom="@dimen/spacing_small"
-          android:layout_centerHorizontal="true"
-          android:textStyle="bold"
-          android:textColor="@color/black"
-          android:maxLines="1"
-          android:ellipsize="end"
-          />
-
-      <TextView
-          android:id="@+id/album_item_desc"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_below="@id/album_item_title"
-          android:layout_marginStart="@dimen/spacing_xsmall"
-          android:layout_marginLeft="@dimen/spacing_xsmall"
-          android:layout_marginBottom="@dimen/spacing_large"
-          android:textColor="@color/black"
-          />
-    </RelativeLayout>
-
-  </FrameLayout>
-</LinearLayout>
+</FrameLayout>
 
     <!--<android.support.design.widget.NavigationView-->
     <!--android:id="@+id/navigation_view"-->

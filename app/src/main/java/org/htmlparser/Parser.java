@@ -28,9 +28,7 @@ package org.htmlparser;
 import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URLConnection;
-
 import org.htmlparser.filters.TagNameFilter;
-import org.htmlparser.filters.NodeClassFilter;
 import org.htmlparser.http.ConnectionManager;
 import org.htmlparser.http.ConnectionMonitor;
 import org.htmlparser.http.HttpHeader;

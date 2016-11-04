@@ -26,11 +26,10 @@
 package org.htmlparser.tags;
 
 import java.util.Locale;
-
 import org.htmlparser.Node;
 import org.htmlparser.NodeFilter;
-import org.htmlparser.Text;
 import org.htmlparser.Tag;
+import org.htmlparser.Text;
 import org.htmlparser.filters.NodeClassFilter;
 import org.htmlparser.nodes.AbstractNode;
 import org.htmlparser.nodes.TagNode;

@@ -29,13 +29,12 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.net.URLConnection;
-
 import org.htmlparser.Parser;
+import org.htmlparser.Tag;
 import org.htmlparser.Text;
 import org.htmlparser.tags.LinkTag;
-import org.htmlparser.Tag;
-import org.htmlparser.util.ParserException;
 import org.htmlparser.util.EncodingChangeException;
+import org.htmlparser.util.ParserException;
 import org.htmlparser.util.Translate;
 import org.htmlparser.visitors.NodeVisitor;
 

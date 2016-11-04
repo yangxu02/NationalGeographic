@@ -32,7 +32,6 @@ import java.beans.PropertyChangeListener;
 import java.io.Serializable;
 import java.net.URL;
 import java.net.URLConnection;
-
 import javax.swing.JList;
 
 /**

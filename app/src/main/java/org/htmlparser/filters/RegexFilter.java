@@ -27,7 +27,6 @@ package org.htmlparser.filters;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import org.htmlparser.Node;
 import org.htmlparser.NodeFilter;
 import org.htmlparser.Text;

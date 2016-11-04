@@ -29,12 +29,11 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.net.URLConnection;
-
 import org.htmlparser.NodeFilter;
 import org.htmlparser.Parser;
+import org.htmlparser.util.EncodingChangeException;
 import org.htmlparser.util.NodeList;
 import org.htmlparser.util.ParserException;
-import org.htmlparser.util.EncodingChangeException;
 
 /**
  * Extract nodes from a URL using a filter.

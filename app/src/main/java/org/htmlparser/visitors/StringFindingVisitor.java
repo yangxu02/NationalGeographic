@@ -26,7 +26,6 @@
 package org.htmlparser.visitors;
 
 import java.util.Locale;
-
 import org.htmlparser.Text;
 
 public class StringFindingVisitor extends NodeVisitor

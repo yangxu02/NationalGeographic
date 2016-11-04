@@ -26,7 +26,6 @@
 package org.htmlparser.filters;
 
 import java.util.Locale;
-
 import org.htmlparser.Attribute;
 import org.htmlparser.Node;
 import org.htmlparser.NodeFilter;

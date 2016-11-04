@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <declare-styleable name="com.linkx.babycare.view.components.BuruDetailView">
-    <attr name="tag" format="string"/>
-  </declare-styleable>
-
   <declare-styleable name="timeline_style" >
     <attr name="text" format="string"/>
     <attr name="textColor" format="color|reference"/>

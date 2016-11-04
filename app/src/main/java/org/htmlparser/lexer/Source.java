@@ -28,7 +28,6 @@ package org.htmlparser.lexer;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Serializable;
-
 import org.htmlparser.util.ParserException;
 
 /**

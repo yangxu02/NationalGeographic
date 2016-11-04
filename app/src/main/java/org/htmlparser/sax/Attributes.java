@@ -26,7 +26,6 @@
 package org.htmlparser.sax;
 
 import java.util.Vector;
-
 import org.htmlparser.Attribute;
 import org.htmlparser.Tag;
 import org.xml.sax.helpers.NamespaceSupport;

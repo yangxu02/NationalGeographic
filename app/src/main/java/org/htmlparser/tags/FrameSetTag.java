@@ -26,7 +26,6 @@
 package org.htmlparser.tags;
 
 import java.util.Locale;
-
 import org.htmlparser.Node;
 import org.htmlparser.util.NodeList;
 import org.htmlparser.util.SimpleNodeIterator;

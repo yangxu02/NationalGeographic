@@ -31,7 +31,6 @@ import org.htmlparser.lexer.Cursor;
 import org.htmlparser.lexer.Lexer;
 import org.htmlparser.lexer.Page;
 import org.htmlparser.scanners.Scanner;
-import org.htmlparser.util.NodeIterator;
 
 public class IteratorImpl implements NodeIterator
 {

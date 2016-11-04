@@ -4,10 +4,11 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -16,14 +17,11 @@ import butterknife.ButterKnife;
 import com.linkx.wallpaper.R;
 import com.linkx.wallpaper.activities.AlbumItemActivity;
 import com.linkx.wallpaper.data.models.AlbumItem;
-import com.linkx.wallpaper.data.models.WallPaper;
+import com.linkx.wallpaper.data.services.NGImageDownloader;
 import com.linkx.wallpaper.utils.DisplayUtils;
 import com.linkx.wallpaper.view.Transition;
 import com.linkx.wallpaper.view.components.TextDrawable;
-import com.linkx.wallpaper.view.components.timeline.LineType;
-import com.linkx.wallpaper.view.components.timeline.TextTimelineView;
 import com.linkx.wallpaper.view.components.timeline.TimelineView;
-import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +38,7 @@ public class AlbumItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     private AdapterType adapterType = AdapterType.ALBUM_ALL;
+    private int lastPosition = -1;
 
     public AlbumItemAdapter() {
     }
@@ -57,6 +56,19 @@ public class AlbumItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         RuntimeViewHolder<AlbumItem> runtimeViewHolder = (RuntimeViewHolder<AlbumItem>) viewHolder;
         runtimeViewHolder.bindView(itemList, position);
+        // add animation
+        Animation animation;
+        if (AdapterType.ALBUM_HISTORY.equals(adapterType)) {
+            animation = AnimationUtils.loadAnimation(viewHolder.itemView.getContext(),
+                (position > lastPosition) ? R.anim.right_to_left
+                    : R.anim.left_from_right);
+        } else {
+            animation = AnimationUtils.loadAnimation(viewHolder.itemView.getContext(),
+                (position > lastPosition) ? R.anim.up_from_bottom
+                    : R.anim.down_from_top);
+        }
+        viewHolder.itemView.startAnimation(animation);
+        lastPosition = position;
     }
 
     @Override
@@ -67,6 +79,12 @@ public class AlbumItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public int getItemCount() {
         return itemList.size();
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+        holder.itemView.clearAnimation();
     }
 
     public AlbumItemAdapter setAdapterType(AdapterType adapterType) {
@@ -124,19 +142,23 @@ public class AlbumItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         final static int VIEW_TYPE_ALBUM = -2;
 
         public static RecyclerView.ViewHolder onCreate(ViewGroup viewGroup, int viewType, AdapterType adapterType) {
+            int width = DisplayUtils.getWidthPixels(viewGroup.getContext());
             if (VIEW_TYPE_LOADING == viewType) {
                 View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_item_album_loading, viewGroup, false);
+                int height = view.getLayoutParams().height;
+                view.setLayoutParams(new RecyclerView.LayoutParams(width, height));
                 return new LoadingViewHolder(view);
             }
 
             if (AdapterType.ALBUM_HISTORY.equals(adapterType)) {
                 View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_history_item_album, viewGroup, false);
                 int height = view.getLayoutParams().height;
-                int width = DisplayUtils.getWidthPixels(viewGroup.getContext());
                 view.setLayoutParams(new RecyclerView.LayoutParams(width, height));
                 return new HistoryAlbumItemViewHolder(view);
             } else {
                 View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_item_album, viewGroup, false);
+                int height = view.getLayoutParams().height;
+                view.setLayoutParams(new RecyclerView.LayoutParams(width, height));
                 return new AlbumItemViewHolder(view, viewType);
             }
         }
@@ -171,7 +193,8 @@ public class AlbumItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         @Override
         public void bindView(List<AlbumItem> itemList, int position) {
             AlbumItem item = itemList.get(position);
-            Picasso.with(this.itemView.getContext())
+            NGImageDownloader.with(this.itemView.getContext())
+//            Picasso.with(this.itemView.getContext())
                 .load(item.thumb())
                 .into(this.thumbView);
 
@@ -210,7 +233,8 @@ public class AlbumItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         @Override
         public void bindView(List<AlbumItem> itemList, int position) {
             AlbumItem item = itemList.get(position);
-            Picasso.with(this.itemView.getContext())
+//            Picasso.with(this.itemView.getContext())
+            NGImageDownloader.with(this.itemView.getContext())
                 .load(item.thumb())
                 .into(this.thumbView);
             this.title.setText(item.title());

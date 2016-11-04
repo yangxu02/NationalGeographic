@@ -26,7 +26,6 @@
 package org.htmlparser.nodes;
 
 import java.io.Serializable;
-
 import org.htmlparser.Node;
 import org.htmlparser.NodeFilter;
 import org.htmlparser.lexer.Page;

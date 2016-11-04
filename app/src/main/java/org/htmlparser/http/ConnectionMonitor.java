@@ -26,7 +26,6 @@
 package org.htmlparser.http;
 
 import java.net.HttpURLConnection;
-
 import org.htmlparser.util.ParserException;
 
 /**

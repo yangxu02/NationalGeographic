@@ -27,7 +27,6 @@ package org.htmlparser.util;
 
 import java.io.Serializable;
 import java.util.NoSuchElementException;
-
 import org.htmlparser.Node;
 import org.htmlparser.NodeFilter;
 import org.htmlparser.visitors.NodeVisitor;

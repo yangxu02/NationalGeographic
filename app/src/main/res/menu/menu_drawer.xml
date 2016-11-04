@@ -9,9 +9,6 @@
         android:id="@+id/navigation_home"
         android:title="@string/home"/>
     <item
-        android:id="@+id/navigation_my_recipes"
-        android:title="@string/my_recipes"/>
-    <item
         android:id="@+id/navigation_bookmarks"
         android:title="@string/bookmarks"/>
     <item

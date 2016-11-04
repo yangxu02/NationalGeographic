@@ -25,13 +25,6 @@
     </activity>
 
     <activity
-        android:name="com.linkx.wallpaper.activities.WallPaperActivity"
-        android:theme="@style/AppTheme.NoStatusBar"
-        android:label="@string/app_name"
-        android:screenOrientation="portrait"
-    >
-    </activity>
-    <activity
         android:name="com.linkx.wallpaper.activities.AlbumItemActivity"
         android:label="@string/app_name"
         android:screenOrientation="portrait"

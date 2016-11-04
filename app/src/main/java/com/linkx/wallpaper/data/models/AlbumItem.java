@@ -1,15 +1,10 @@
 package com.linkx.wallpaper.data.models;
 
-import android.text.TextUtils;
-import android.util.Log;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 import com.linkx.wallpaper.utils.TextUtil;
-import java.util.List;
-import org.apache.commons.lang3.StringEscapeUtils;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * Created by ulyx.yang on 2016/9/15.
@@ -52,7 +47,7 @@ public abstract class AlbumItem extends Model {
     public abstract String inputTime();
 
     @Override
-    public String identity() throws MethodNotOverrideException {
+    public String identity() {
         return id();
     }
 

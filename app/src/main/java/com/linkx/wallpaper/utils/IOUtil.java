@@ -74,10 +74,20 @@ public class IOUtil {
         return file.getParentFile();
     }
 
-    public static File cacheDir() {
+    public static File picassoCacheDir() {
         File dir = Environment.getExternalStorageDirectory();
-        String path =  Joiner.on('/').join(dir.getAbsolutePath(), CACHE_DIR, "_");
+        String path =  Joiner.on('/').join(dir.getAbsolutePath(), CACHE_DIR, "picasso");
         return new File(path);
+    }
+
+    public static String cacheFilePath(String fileName) {
+        File dir = Environment.getExternalStorageDirectory();
+        return Joiner.on('/').join(dir.getAbsolutePath(), CACHE_DIR, "self", fileName);
+    }
+
+    public static String dataFilePath(String fileName) {
+        File dir = Environment.getExternalStorageDirectory();
+        return Joiner.on('/').join(dir.getAbsolutePath(), DATA_DIR, fileName);
     }
 
     public static String dayStr(long mills) {
