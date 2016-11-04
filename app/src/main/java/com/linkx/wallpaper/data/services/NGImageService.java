@@ -66,9 +66,12 @@ public class NGImageService implements ICachedDataService {
 
         @Override
         public Observable<IImage> get(AlbumItem albumItem) {
-             String fileName = IOUtil.dataFilePath("clip_" + albumItem.identity());
+            String fileName = IOUtil.dataFilePath("clip_" + albumItem.identity());
             try {
-                return Observable.just(Model.fromJson(IOUtil.readFirstLine(fileName), Image.class));
+                File file = new File(fileName);
+                if (file.exists()) {
+                    return Observable.just(Model.fromJson(Files.readFirstLine(file, Charsets.UTF_8), Image.class));
+                }
             } catch (IOException e) {
                 Log.w("WP", e);
             }
