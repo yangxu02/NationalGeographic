@@ -1,5 +1,5 @@
 <resources>
-  <string name="app_name">National Geographic Album</string>
+  <string name="app_name">DailyWallpaper</string>
   <string name="sendImage">Send Image With</string>
   <string name="setImage">Set Image As</string>
   <string name="no_way_to_share_image">No Application To Send Image With</string>

@@ -62,11 +62,15 @@ public class NGImageDownloader {
                 } else {
                     try {
                         Bitmap bitmap = Picasso.with(context).load(url).get();
-                        if (!localFile.getParentFile().exists()) {
-                            Files.createParentDirs(localFile);
+                        try {
+                            if (!localFile.getParentFile().exists()) {
+                                Files.createParentDirs(localFile);
+                            }
+                            bitmap.compress(Bitmap.CompressFormat.PNG, 100, new FileOutputStream(localFile));
+                            return Observable.just(new Pair<>(localPath, bitmap));
+                        } catch (Exception e) {
+                            return Observable.just(new Pair<>("", bitmap));
                         }
-                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, new FileOutputStream(localFile));
-                        return Observable.just(new Pair<>(localPath, bitmap));
                     } catch (IOException e) {
                         Log.e("WP", "", e);
                     }

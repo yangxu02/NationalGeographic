@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
+import android.util.Pair;
 import com.google.common.base.Charsets;
 import com.google.common.base.Strings;
 import com.google.common.io.Files;
@@ -106,7 +107,7 @@ public class NGImageService implements ICachedDataService {
 
     public static Observable<ImageInfo> getAlbumItemClip(final Context context, final AlbumItem albumItem) {
         return new NGImageCache().get(albumItem).flatMap(iImage -> {
-            if (null != iImage) {
+            if (null != iImage && !Strings.isNullOrEmpty(((Image)iImage).localPath())) {
                 Image image = (Image) iImage;
                 ImageInfo imageInfo = new ImageInfo();
                 imageInfo.id = image.source().id();
@@ -141,14 +142,28 @@ public class NGImageService implements ICachedDataService {
                     })
                     .flatMap(imageInfo -> {
                         NGImageDownloader.with(context).load(imageInfo.link).get()
-                            .subscribe(imageBitMap -> {
-                                if (null == imageBitMap) {
-                                    throw OnErrorThrowable.from(new Exception("get bitmap of " + imageInfo.link + " failed"));
-                                }
-                                imageInfo.localPath = imageBitMap.first;
-                                imageInfo.bitmap = imageBitMap.second;
-                                imageInfo.mimeType = "image/png";
-                            });
+                            .subscribe(
+                                new Subscriber<Pair<String, Bitmap>>() {
+                                    @Override
+                                    public void onCompleted() {
+
+                                    }
+
+                                    @Override
+                                    public void onError(Throwable e) {
+                                        throw OnErrorThrowable.from(new Exception("get bitmap of " + imageInfo.link + " failed", e));
+                                    }
+
+                                    @Override
+                                    public void onNext(Pair<String, Bitmap> imageBitMap) {
+                                        if (null == imageBitMap) {
+                                            throw OnErrorThrowable.from(new Exception("get bitmap of " + imageInfo.link + " failed"));
+                                        }
+                                        imageInfo.localPath = imageBitMap.first;
+                                        imageInfo.bitmap = imageBitMap.second;
+                                        imageInfo.mimeType = "image/png";
+                                    }
+                                });
                         return Observable.just(imageInfo);
                     })
                     .flatMap(imageInfo -> {
